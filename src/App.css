@@ -1,0 +1,42 @@
+/* Navbar */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: white;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.good {
+  color: #1b5e20;
+}
+
+.food {
+  background: orange;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-left: 5px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  color: #333;
+}
+
+.cart-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+ 
