@@ -2,112 +2,121 @@ import React from "react";
 
 const ContactUs = () => {
   return (
-    <div className="container py-5">
+    <div
+      className="container-fluid py-5"
+      style={{ backgroundColor: "#fff1f1" }}
+    >
 
       {/* Heading */}
       <div className="text-center mb-5">
-        <h1 className="fw-bold display-5">Contact Us 📞</h1>
+        <h1 className="fw-bold display-5 mb-3">
+          Contact Us 📞
+        </h1>
         <p className="text-muted fs-5">
           We'd love to hear from you — Reach out anytime!
         </p>
       </div>
 
-      <div className="row g-5">
+      <div className="container">
+        <div className="row g-4 align-items-stretch">
 
-        {/* Contact Info Cards */}
-        <div className="col-md-5">
+          {/* Contact Info */}
+          <div className="col-md-5">
 
-          <div
-            className="p-4 shadow-lg rounded mb-4"
-            style={{
-              background: "linear-gradient(135deg, #fff3e0, #ffe0b2)",
-            }}
-          >
-            <h4 className="fw-bold mb-3">📍 Address</h4>
-            <p>123 Food Street, City Center, India</p>
+            {[
+              { title: "📍 Address", value: "123 Food Street, City Center, India" },
+              { title: "📞 Phone", value: "+91 98765 43210" },
+              { title: "✉️ Email", value: "support@goodfood.com" },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="p-4 rounded mb-4 shadow-sm"
+                style={{ backgroundColor: "#ffe5e5" }}
+              >
+                <h5 className="fw-bold mb-2">{item.title}</h5>
+                <p className="text-secondary mb-0">{item.value}</p>
+              </div>
+            ))}
+
           </div>
 
-          <div
-            className="p-4 shadow-lg rounded mb-4"
-            style={{
-              background: "linear-gradient(135deg, #fff3e0, #ffe0b2)",
-            }}
-          >
-            <h4 className="fw-bold mb-3">📞 Phone</h4>
-            <p>+91 98765 43210</p>
-          </div>
+          {/* Contact Form */}
+          <div className="col-md-7">
 
-          <div
-            className="p-4 shadow-lg rounded"
-            style={{
-              background: "linear-gradient(135deg, #fff3e0, #ffe0b2)",
-            }}
-          >
-            <h4 className="fw-bold mb-3">✉️ Email</h4>
-            <p>support@goodfood.com</p>
+            <div
+              className="p-4 p-lg-5 rounded shadow-sm"
+              style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #ffd6d6",
+              }}
+            >
+
+              <h4
+                className="fw-bold mb-4"
+                style={{ color: "#e63946" }}
+              >
+                Send Us a Message
+              </h4>
+
+              <form>
+
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    className="form-control p-3"
+                    placeholder="Your Name"
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <input
+                    type="email"
+                    className="form-control p-3"
+                    placeholder="Your Email"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <textarea
+                    className="form-control p-3"
+                    rows="4"
+                    placeholder="Your Message"
+                  ></textarea>
+                </div>
+
+                <button
+                  className="w-100"
+                  style={{
+                    backgroundColor: "#e63946",
+                    color: "white",
+                    border: "none",
+                    padding: "12px",
+                    borderRadius: "8px",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                  }}
+                >
+                  Send Message 🚀
+                </button>
+
+              </form>
+
+            </div>
+
           </div>
 
         </div>
-
-        {/* Contact Form */}
-        <div className="col-md-7">
-
-          <div
-            className="shadow-lg p-5 rounded"
-            style={{
-              background: "#ffffff",
-              border: "2px solid #ffe0b2",
-            }}
-          >
-
-            <h3 className="fw-bold mb-4 text-warning">
-              Send Us a Message
-            </h3>
-
-            <form>
-
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control p-3"
-                  placeholder="Your Name"
-                />
-              </div>
-
-              <div className="mb-3">
-                <input
-                  type="email"
-                  className="form-control p-3"
-                  placeholder="Your Email"
-                />
-              </div>
-
-              <div className="mb-3">
-                <textarea
-                  className="form-control p-3"
-                  rows="4"
-                  placeholder="Your Message"
-                ></textarea>
-              </div>
-
-              <button className="btn btn-warning btn-lg w-100">
-                Send Message 🚀
-              </button>
-
-            </form>
-
-          </div>
-
-        </div>
-
       </div>
 
-      {/* Bottom Highlight Section */}
-      <div className="text-center mt-5 p-4 bg-light rounded shadow-sm">
-        <h4 className="fw-bold">
+      {/* Bottom Section */}
+      <div
+        className="text-center mt-5 py-4 rounded"
+        style={{ backgroundColor: "#fff6f6" }}
+      >
+        <h5 className="fw-bold mb-2">
           We reply within 24 hours ❤️
-        </h4>
-        <p className="text-muted mt-2">
+        </h5>
+        <p className="text-secondary mb-0">
           Customer satisfaction is our top priority.
         </p>
       </div>

@@ -1,145 +1,88 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const menuItems = [
-  {
-    id: 1,
-    name: "Cheese Burger",
-    price: "$8.99",
-    img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-    tag: "Popular",
-  },
-  {
-  id: 2,
-  name: "Italian Pizza",
-  price: "$12.99",
-  img: "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?q=80&w=1000&auto=format&fit=crop",
-  tag: "Best Seller",
-},
-
-  {
-    id: 3,
-    name: "Pasta Alfredo",
-    price: "$10.49",
-    img: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb",
-    tag: "Chef Special",
-  },
-  {
-    id: 4,
-    name: "French Fries",
-    price: "$4.99",
-    img: "https://images.unsplash.com/photo-1576107232684-1279f390859f",
-    tag: "Snack",
-  },
-  {
-    id: 5,
-    name: "Grilled Sandwich",
-    price: "$6.49",
-    img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af",
-    tag: "Fresh",
-  },
-  {
-    id: 6,
-    name: "Chicken Salad",
-    price: "$9.29",
-    img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-    tag: "Healthy",
-  },
+const categories = [
+  { name: "North Indian", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=500&q=80" },
+  { name: "Desserts", img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=500&q=80" },
+  { name: "Pizza", img: "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=500&q=80" },
+  { name: "Chinese", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=500&q=80" },
+  { name: "Burger", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" },
+  { name: "Biryani", img: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=500&q=80" },
+  { name: "Noodles", img: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=500&q=80" },
+  { name: "Paratha", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80" },
+  { name: "Pasta", img: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=500&q=80" },
+  { name: "Dosa", img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=500&q=80" },
+  { name: "Pastry", img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=500&q=80" },
+  { name: "Ice Cream", img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=500&q=80" },
 ];
 
 function Menu() {
   return (
     <section
       style={{
-        background: "linear-gradient(135deg, #ffe5d9, #ffd7ba)",
-        minHeight: "100vh",
-        padding: "70px 0",
+        backgroundColor: "#ffdddd",
+        padding: "100px 0",
       }}
     >
       <div className="container">
+        <h2
+          className="fw-bold text-center mb-5"
+          style={{ fontSize: "42px", color: "#e63946" }}
+        >
+          Explore Our Delicious Menu
+        </h2>
 
-        {/* Heading */}
-        <div className="text-center mb-5 ">
-          <h1 className="fw-bold display-5">Our Popular Menu 🍽️</h1>
-          <p className="text-muted fs-5">
-            Delicious food made fresh with love
-          </p>
-        </div>
-
-        <div className="row g-4">
-          {menuItems.map((item) => (
-            <div key={item.id} className="col-md-6 col-lg-4">
-
+        <div className="row g-5 justify-content-center">
+          {categories.map((item, index) => (
+            <div key={index} className="col-6 col-md-4 col-lg-3 text-center">
               <div
-                className="card shadow-lg border-0 h-100 overflow-hidden"
                 style={{
-                  borderRadius: "18px",
-                  transition: "transform 0.3s ease",
+                  background: "linear-gradient(135deg, #fff8f2, #ffeaea)", // modern gradient
+                  borderRadius: "20px",
+                  padding: "30px 20px",
+                  boxShadow: "0 8px 20px rgba(0,0,0,0.1)", // soft shadow
+                  transition: "0.3s",
                   cursor: "pointer",
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.03)")
+                  (e.currentTarget.style.transform = "translateY(-8px)")
                 }
                 onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
+                  (e.currentTarget.style.transform = "translateY(0)")
                 }
               >
-
-                {/* Image */}
-                <div style={{ position: "relative" }}>
+                <div
+                  className="mx-auto mb-3"
+                  style={{
+                    width: "130px",
+                    height: "130px",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    border: "3px solid #e63946",
+                  }}
+                >
                   <img
                     src={item.img}
                     alt={item.name}
-                    className="card-img-top"
                     style={{
-                      height: "240px",
+                      width: "100%",
+                      height: "100%",
                       objectFit: "cover",
                     }}
                   />
-
-                  {/* Tag Badge */}
-                  <span
-                    className="badge"
-                    style={{
-                      position: "absolute",
-                      top: "12px",
-                      left: "12px",
-                      backgroundColor: "#ff6b35",
-                      padding: "8px 12px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {item.tag}
-                  </span>
                 </div>
-
-                {/* Card Body */}
-                <div className="card-body text-center p-4">
-
-                  <h5 className="fw-bold mb-2">{item.name}</h5>
-
-                  <p className="text-success fw-bold fs-5 mb-3">
-                    {item.price}
-                  </p>
-
-                  <button
-                    className="btn btn-lg w-100"
-                    style={{
-                      backgroundColor: "#ff6b35",
-                      color: "white",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    Order Now 🚀
-                  </button>
-
-                </div>
-
+                <h6
+                  style={{
+                    color: "#333",
+                    fontWeight: "600",
+                  }}
+                >
+                  {item.name}
+                </h6>
               </div>
-
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
