@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Navbar({ cartCount }) {
 
   const activeStyle = {
-    color: "#e63946",
-    backgroundColor: "#ffdddd",
+    color: "#f3dbdd",
+    backgroundColor: "#ca323c",
     fontWeight: "600",
     padding: "6px 14px",
     borderRadius: "8px",
@@ -16,19 +16,19 @@ function Navbar({ cartCount }) {
     <nav
       className="navbar navbar-expand-lg"
       style={{
-        backgroundColor: "linear-gradient(135deg,#ff4d4d,#e63946,#b11226)",
+        backgroundColor: "#e63946",
         borderBottom: "2px solid #e63946",
       }}
     >
       <div className="container-fluid px-4 py-3">
 
         {/* Logo */}
-        <NavLink className="navbar-brand fw-bold fs-4" to="/">
-          <span style={{ color: "#ffdddd" }}>Good</span>{" "}
+        <NavLink className="navbar-brand fw-bold fs-3" to="/">
+          <span style={{ color: "#f8dada" }}>Good</span>{" "}
           <span
             style={{
-              backgroundColor: "#ffdddd",
-              color: "#e63946",
+              backgroundColor: "#f8dada",
+              color: "#c93945",
               padding: "5px 10px",
               borderRadius: "8px",
             }}
@@ -53,7 +53,7 @@ function Navbar({ cartCount }) {
         >
 
           {/* Center Links */}
-          <ul className="navbar-nav mx-auto gap-lg-4 fw-semibold">
+          <ul className="navbar-nav mx-auto gap-lg-3 fw-bold">
             {[
               { path: "/lunchbox", name: "Lunch Box" },
               { path: "/menus", name: "Menu" },

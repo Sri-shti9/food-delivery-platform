@@ -4,7 +4,7 @@ function Hero() {
   return (
     <div
       style={{
-        background: "linear-gradient(135deg,#ff4d4d,#e63946,#b11226)",
+        background: "#e63946",
         padding: "120px 0",
         position: "relative",
         overflow: "hidden",
