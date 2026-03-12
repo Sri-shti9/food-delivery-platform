@@ -1,106 +1,96 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-const chefs = [
-  {
-    id: 1,
-    name: "Chef Rahul Sharma",
-    text: "Expert in North Indian cuisine.",
-    img: "https://randomuser.me/api/portraits/men/11.jpg",
-  },
-  {
-    id: 2,
-    name: "Chef Maria Fernandes",
-    text: "Italian pasta and pizza specialist.",
-    img: "https://randomuser.me/api/portraits/women/21.jpg",
-  },
-  {
-    id: 3,
-    name: "Chef Aman Verma",
-    text: "Chinese and Asian food expert.",
-    img: "https://randomuser.me/api/portraits/men/31.jpg",
-  },
-  {
-    id: 4,
-    name: "Chef Neha Gupta",
-    text: "Desserts and bakery specialist.",
-    img: "https://randomuser.me/api/portraits/women/41.jpg",
-  },
-  {
-    id: 5,
-    name: "Chef Karan Mehta",
-    text: "BBQ and grilled food master.",
-    img: "https://randomuser.me/api/portraits/men/51.jpg",
-  },
-  {
-    id: 6,
-    name: "Chef Sneha Patel",
-    text: "Modern fusion cuisine expert.",
-    img: "https://randomuser.me/api/portraits/women/61.jpg",
-  },
-];
+function Chefs() {
 
-function ChefPage() {
+  const chefs = [
+    {
+      name: "Chef Rahul Sharma",
+      role: "Expert in North Indian cuisine",
+      img: "https://randomuser.me/api/portraits/men/32.jpg",
+    },
+    {
+      name: "Chef Maria Fernandes",
+      role: "Italian pasta & pizza specialist",
+      img: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    {
+      name: "Chef Aman Verma",
+      role: "Chinese & Asian food expert",
+      img: "https://randomuser.me/api/portraits/men/65.jpg",
+    },
+    {
+      name: "Chef Neha Gupta",
+      role: "Desserts & bakery specialist",
+      img: "https://randomuser.me/api/portraits/women/68.jpg",
+    },
+    {
+      name: "Chef Karan Mehta",
+      role: "BBQ & grilled food master",
+      img: "https://randomuser.me/api/portraits/men/75.jpg",
+    },
+    {
+      name: "Chef Sneha Patel",
+      role: "Modern fusion cuisine expert",
+      img: "https://randomuser.me/api/portraits/women/72.jpg",
+    },
+  ];
+
   return (
     <section
+      className="py-5"
       style={{
-        backgroundColor: "#ffdddd",
-        padding: "90px 0",
+        background: "linear-gradient(135deg, #fff8f2, #ffeaea)"
       }}
     >
       <div className="container">
 
-        {/* Heading */}
-        <div className="text-center mb-5">
-          <h1
-            className="fw-bold"
-            style={{ fontSize: "42px", color: "#e63946" }}
-          >
-            Meet Our Expert Chefs 👨‍🍳
-          </h1>
-        </div>
+        <h2
+          className="text-center fw-bold mb-5"
+          style={{ color: "#e63946" }}
+        >
+          Meet Our Expert Chefs 👨‍🍳
+        </h2>
 
         <div className="row">
 
-          {chefs.map((chef) => (
-            <div key={chef.id} className="col-md-4 mb-4">
+          {chefs.map((chef, index) => (
+            <div className="col-lg-4 col-md-6 mb-4" key={index}>
 
               <div
-                className="card text-center"
-                style={{
-                  border: "none",
-                  borderRadius: "18px",
-                  boxShadow: "0 6px 18px rgba(0,0,0,0.1)",
-                  padding: "25px",
-                }}
+                className="card border-0 shadow-lg h-100 text-center p-4"
+                style={{ borderRadius: "20px" }}
               >
 
-                {/* Image */}
                 <img
                   src={chef.img}
                   alt={chef.name}
+                  className="rounded-circle mx-auto mb-3"
+                  width="110"
+                  height="110"
                   style={{
-                    width: "100px",
-                    height: "100px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    margin: "0 auto",
                     border: "4px solid #e63946",
+                    objectFit: "cover",
                   }}
                 />
 
-                {/* Name */}
-                <h5 className="fw-bold mt-3">{chef.name}</h5>
+                <h5 className="fw-bold">{chef.name}</h5>
 
-                {/* Role */}
-                <div style={{ color: "#e63946" }}>
-                  👨‍🍳 Professional Chef
-                </div>
-
-                {/* Description */}
-                <p style={{ color: "#555", fontSize: "15px", marginTop: "6px" }}>
-                  {chef.text}
+                <p className="fw-semibold mb-1" style={{ color: "#e63946" }}>
+                  <i className="fas fa-utensils me-2"></i>
+                  Professional Chef
                 </p>
+
+                <p className="text-muted">{chef.role}</p>
+
+                <div className="mt-2">
+
+                  <i className="fab fa-instagram mx-2" style={{color:"#010000"}}></i>
+                  <i className="fab fa-facebook mx-2" style={{color:"#000000"}}></i>
+                  <i className="fab fa-twitter mx-2" style={{color:"#000000"}}></i>
+
+                </div>
 
               </div>
 
@@ -108,9 +98,11 @@ function ChefPage() {
           ))}
 
         </div>
+
       </div>
+
     </section>
   );
 }
 
-export default ChefPage;
+export default Chefs;
