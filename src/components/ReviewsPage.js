@@ -44,76 +44,81 @@ function ReviewsPage() {
   return (
     <section
       style={{
-        backgroundColor: "#ffdddd",
-        padding: "90px 0",
+        background: "linear-gradient(135deg, #fff8f2, #ffeaea)",
+        padding: "100px 0",
       }}
     >
       <div className="container">
 
         {/* Heading */}
         <div className="text-center mb-5">
-          <h1
-            className="fw-bold"
-            style={{ fontSize: "42px", color: "#e63946" }}
-          >
-            What Our Customers Say ❤️
+          <h1 className="fw-bold" style={{ color: "#e63946" }}>
+            What Our Customers Say
           </h1>
+          <p className="text-muted">
+            Real experiences from our happy customers
+          </p>
         </div>
 
-        {reviews.map((review, index) => (
-          <div
-            key={review.id}
-            className={`row align-items-center mb-4 ${
-              index % 2 !== 0 ? "flex-row-reverse" : ""
-            }`}
-          >
-            {/* Image */}
-            <div className="col-md-3 text-center">
-              <img
-                src={review.img}
-                alt={review.name}
-                style={{
-                  width: "110px",
-                  height: "110px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  border: "4px solid #e63946",
-                }}
-              />
-            </div>
+        <div className="row g-4">
 
-            {/* Review Card */}
-            <div className="col-md-9 mt-3 mt-md-0">
+          {reviews.map((review) => (
+            <div className="col-lg-4 col-md-6" key={review.id}>
+
               <div
+                className="card border-0 shadow text-center p-4 h-100"
                 style={{
-                  background: "#ffffff",
-                  padding: "25px",
-                  borderRadius: "15px",
-                  boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+                  borderRadius: "20px",
+                  transition: "0.3s",
                 }}
               >
-                <h5 className="fw-bold mb-1" style={{ color: "#333" }}>
-                  {review.name}
-                </h5>
 
-                <div style={{ color: "#e63946", fontSize: "18px" }}>
-                  ★★★★★
+                {/* Quote Icon */}
+                <div className="mb-3" style={{ color: "#e63946" }}>
+                  <i className="fa-solid fa-quote-left fa-2x"></i>
                 </div>
 
-                <p
-                  style={{
-                    fontSize: "16px",
-                    marginTop: "6px",
-                    marginBottom: "0",
-                    color: "#555",
-                  }}
-                >
+                {/* Review Text */}
+                <p className="text-muted">
                   "{review.text}"
                 </p>
+
+                {/* Stars */}
+                <div className="mb-3" style={{ color: "#ffc107" }}>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+
+                {/* User */}
+                <div className="d-flex align-items-center justify-content-center mt-3">
+
+                  <img
+                    src={review.img}
+                    alt={review.name}
+                    className="rounded-circle me-3"
+                    width="60"
+                    height="60"
+                    style={{
+                      border: "3px solid #e63946",
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  <h6 className="mb-0 fw-bold">
+                    {review.name}
+                  </h6>
+
+                </div>
+
               </div>
+
             </div>
-          </div>
-        ))}
+          ))}
+
+        </div>
 
       </div>
     </section>
