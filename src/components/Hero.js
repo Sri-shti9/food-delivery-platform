@@ -2,28 +2,25 @@ import React from "react";
 
 function Hero() {
   return (
-    <div
+    <section
       style={{
-        background: "#e63946",
-        padding: "120px 0",
-        position: "relative",
-        overflow: "hidden",
+        background: "linear-gradient(135deg,#fff,#f8f9fa)",
+        padding: "80px 0",
       }}
     >
-      {/* MAIN CONTAINER */}
       <div
         className="container"
         style={{
-          background: "rgba(255,255,255,0.9)",
+          background: "rgba(255,255,255,0.95)",
           borderRadius: "25px",
           padding: "60px",
-          boxShadow: "0 15px 40px rgba(0,0,0,0.15)",
+          boxShadow: "0 20px 50px rgba(0,0,0,0.12)",
         }}
       >
         <div className="row align-items-center">
 
           {/* LEFT CONTENT */}
-          <div className="col-md-6">
+          <div className="col-lg-6">
 
             <h1
               style={{
@@ -40,7 +37,7 @@ function Hero() {
             <p
               style={{
                 fontSize: "18px",
-                marginTop: "25px",
+                marginTop: "20px",
                 color: "#555",
                 maxWidth: "500px",
               }}
@@ -49,46 +46,72 @@ function Hero() {
               Experience restaurant-style dining at your home.
             </p>
 
-            {/* PHONE BUTTON */}
-            <div className="mt-4">
+            {/* BUTTONS */}
+            <div className="d-flex gap-3 mt-4 flex-wrap">
+
               <button
                 className="btn"
                 style={{
                   background: "#e63946",
                   color: "white",
-                  padding: "14px 30px",
+                  padding: "14px 28px",
                   borderRadius: "30px",
                   fontWeight: "600",
                   border: "none",
-                  fontSize: "17px",
-                  boxShadow: "0 8px 20px rgba(230,57,70,0.4)",
+                  fontSize: "16px",
+                  boxShadow: "0 10px 25px rgba(230,57,70,0.4)",
                 }}
               >
-                📞 +1 (800) 231-89-74
+                <i className="fas fa-phone me-2"></i>
+                +1 (800) 231-89-74
               </button>
+
+              <button
+                className="btn btn-outline-dark"
+                style={{
+                  borderRadius: "30px",
+                  padding: "14px 26px",
+                  fontWeight: "600",
+                }}
+              >
+                <i className="fas fa-utensils me-2"></i>
+                View Menu
+              </button>
+
             </div>
 
             {/* STATS */}
-            <div className="d-flex gap-5 mt-5">
+            <div className="d-flex gap-5 mt-5 flex-wrap">
+
               <div>
-                <h3 style={{ fontWeight: "700", color: "#e63946" }}>1000+</h3>
+                <h3 style={{ fontWeight: "700", color: "#e63946" }}>
+                  <i className="fas fa-smile me-2"></i>
+                  1000+
+                </h3>
                 <p style={{ color: "#555" }}>Happy Clients</p>
               </div>
 
               <div>
-                <h3 style={{ fontWeight: "700", color: "#e63946" }}>80+</h3>
+                <h3 style={{ fontWeight: "700", color: "#e63946" }}>
+                  <i className="fas fa-utensils me-2"></i>
+                  80+
+                </h3>
                 <p style={{ color: "#555" }}>Dishes</p>
               </div>
 
               <div>
-                <h3 style={{ fontWeight: "700", color: "#e63946" }}>15+</h3>
+                <h3 style={{ fontWeight: "700", color: "#e63946" }}>
+                  <i className="fas fa-user-chef me-2"></i>
+                  15+
+                </h3>
                 <p style={{ color: "#555" }}>Expert Chefs</p>
               </div>
+
             </div>
           </div>
 
           {/* RIGHT SIDE IMAGES */}
-          <div className="col-md-6 position-relative text-center mt-5 mt-md-0">
+          <div className="col-lg-6 position-relative text-center mt-5 mt-lg-0">
 
             {/* Main Image */}
             <img
@@ -97,7 +120,7 @@ function Hero() {
               style={{
                 width: "420px",
                 borderRadius: "25px",
-                boxShadow: "0 25px 50px rgba(0,0,0,0.3)",
+                boxShadow: "0 25px 50px rgba(0,0,0,0.25)",
               }}
             />
 
@@ -133,7 +156,7 @@ function Hero() {
 
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
