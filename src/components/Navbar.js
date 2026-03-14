@@ -5,31 +5,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Navbar({ cartCount }) {
 
   const activeStyle = {
-    color: "#f3dbdd",
-    backgroundColor: "#ca323c",
+    color: "#e63946",
     fontWeight: "600",
-    padding: "6px 14px",
-    borderRadius: "8px",
   };
 
   return (
     <nav
-      className="navbar navbar-expand-lg"
+      className="navbar navbar-expand-lg shadow-sm"
       style={{
-        backgroundColor: "#e63946",
-        borderBottom: "2px solid #e63946",
+        backgroundColor: "#f8f9fa",
+        borderBottom: "1px solid #eee",
       }}
     >
-      <div className="container-fluid px-4 py-3">
+      <div className="container-fluid px-4 py-2">
 
         {/* Logo */}
         <NavLink className="navbar-brand fw-bold fs-3" to="/">
-          <span style={{ color: "#f8dada" }}>Good</span>{" "}
+          <span style={{ color: "#e63946" }}>Good</span>{" "}
           <span
             style={{
-              backgroundColor: "#f8dada",
-              color: "#c93945",
-              padding: "5px 10px",
+              backgroundColor: "#e63946",
+              color: "white",
+              padding: "4px 10px",
               borderRadius: "8px",
             }}
           >
@@ -53,61 +50,37 @@ function Navbar({ cartCount }) {
         >
 
           {/* Center Links */}
-          <ul className="navbar-nav mx-auto gap-lg-3 fw-bold">
+          <ul className="navbar-nav mx-auto gap-lg-4 fw-semibold">
+
             {[
-              { path: "/lunchbox", name: "Lunch Box" },
-              { path: "/menus", name: "Menu" },
-              { path: "/about", name: "About" },
-              { path: "/delivery", name: "Delivery" },
-              { path: "/contacts", name: "Contacts" },
+              { path: "/lunchbox", name: "Lunch Box", icon: "fa-box" },
+              { path: "/menus", name: "Menu", icon: "fa-utensils" },
+              { path: "/about", name: "About", icon: "fa-info-circle" },
+              { path: "/delivery", name: "Delivery", icon: "fa-truck" },
+              { path: "/contacts", name: "Contacts", icon: "fa-phone" },
             ].map((item, i) => (
               <li key={i} className="nav-item">
                 <NavLink
                   to={item.path}
-                  className="nav-link px-3"
+                  className="nav-link d-flex align-items-center gap-2"
                   style={({ isActive }) =>
                     isActive
                       ? activeStyle
-                      : { color: "#ffdddd" }
+                      : { color: "#555" }
                   }
                 >
+                  <i className={`fas ${item.icon}`}></i>
                   {item.name}
                 </NavLink>
               </li>
             ))}
+
           </ul>
 
           {/* Right Side */}
           <div className="d-flex align-items-center gap-3 mt-3 mt-lg-0">
 
-            {/* Search */}
-            <div style={{ position: "relative" }}>
-              <input
-                type="text"
-                placeholder="Search food..."
-                className="form-control"
-                style={{
-                  padding: "6px 35px 6px 12px",
-                  borderRadius: "20px",
-                  border: "1px solid #e63946",
-                  fontSize: "14px",
-                  width: "170px",
-                  background: "#fff",
-                }}
-              />
-              <span
-                style={{
-                  position: "absolute",
-                  right: "12px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "14px",
-                  color: "#e63946",
-                }}
-              >
-                🔍
-              </span>
-            </div>
+            
 
             {/* Cart */}
             <Link to="/cart" style={{ textDecoration: "none" }}>
@@ -115,11 +88,11 @@ function Navbar({ cartCount }) {
                 style={{
                   position: "relative",
                   fontSize: "20px",
-                  cursor: "pointer",
                   color: "#333",
                 }}
               >
-                🛒
+                <i className="fas fa-shopping-cart"></i>
+
                 {cartCount > 0 && (
                   <span
                     style={{
@@ -142,43 +115,52 @@ function Navbar({ cartCount }) {
 
             {/* Profile */}
             <div className="dropdown">
+
               <button
-                className="btn"
+                className="btn btn-light border dropdown-toggle d-flex align-items-center gap-2"
                 data-bs-toggle="dropdown"
                 style={{
                   borderRadius: "20px",
                   fontSize: "14px",
-                  color: "#e63946",
-                  border: "1px solid #e63946",
-                  background: "white",
                 }}
               >
-                👤 Profile
+                <i className="fas fa-user"></i>
+                Profile
               </button>
 
-              <ul className="dropdown-menu dropdown-menu-end">
+              <ul className="dropdown-menu dropdown-menu-end shadow">
+
                 <li>
                   <Link className="dropdown-item" to="/profile">
+                    <i className="fas fa-user me-2"></i>
                     My Profile
                   </Link>
                 </li>
+
                 <li>
                   <Link className="dropdown-item" to="/orders">
+                    <i className="fas fa-box me-2"></i>
                     My Orders
                   </Link>
                 </li>
+
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
+
                 <li>
                   <Link className="dropdown-item text-danger" to="/">
+                    <i className="fas fa-sign-out-alt me-2"></i>
                     Logout
                   </Link>
                 </li>
+
               </ul>
+
             </div>
 
           </div>
+
         </div>
 
       </div>
