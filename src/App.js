@@ -18,6 +18,8 @@ import Delivery from "./Pages/Delivery";
 import Contacts from "./Pages/Contacts";
 import Menus from "./Pages/Menus";
 import Payment from "./Pages/Payment";
+import Login from "./Pages/Login";
+import Auth from "./Pages/Login";
 
 
 // ✅ Home page
@@ -100,7 +102,7 @@ const App = () => {
           }
         />
 
-        {/* ✅ ADD THIS PAYMENT ROUTE */}
+     
         <Route path="/payment" element={<Payment />} />
 
         <Route path="/lunchbox" element={<LunchBox />} />
@@ -108,6 +110,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/delivery" element={<Delivery />} />
         <Route path="/contacts" element={<Contacts />} />
+        <Route path="/Login" element={<Auth />} />  
 
       </Routes>
 
