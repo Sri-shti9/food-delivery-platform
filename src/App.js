@@ -18,6 +18,7 @@ import Delivery from "./Pages/Delivery";
 import Contacts from "./Pages/Contacts";
 import Menus from "./Pages/Menus";
 import Payment from "./Pages/Payment";
+import Auth from "./Pages/Auth";
 
 
 // ✅ Home page
@@ -108,6 +109,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/delivery" element={<Delivery />} />
         <Route path="/contacts" element={<Contacts />} />
+        <Route path="/Login" element={<Auth/>} />
 
       </Routes>
 
