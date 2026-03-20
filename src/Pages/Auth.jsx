@@ -1,8 +1,10 @@
 import { useState } from "react";
 import api from "../axiosSetup/axios";
+import { useNavigate } from "react-router-dom";
 
 
-const Auth = () => {
+const Auth = ({ setIsAuth }) => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
 
   const [formData, setFormData] = useState({
@@ -51,54 +53,59 @@ const Auth = () => {
     return isValid;
   };
 
-  // submit form
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!handleValidation()) return;
+  if (!handleValidation()) return;
 
-    try {
-      const endpoint = isLogin ? "/auth/login" : "/auth/signup";
+  try {
+    const endpoint = isLogin ? "/auth/login" : "/auth/signup";
 
-      const payload = isLogin
-        ? {
-            email: formData.email,
-            password: formData.password
-          }
-        : {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password
-          };
-
-      const response = await api.post(endpoint, payload);
-
-      if (response.status === 200) {
-        if (isLogin) {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
+    const payload = isLogin
+      ? {
+          email: formData.email,
+          password: formData.password,
         }
+      : {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        };
 
-        alert(response.data.message || "Success");
+    const response = await api.post(endpoint, payload);
+    console.log(response);
+
+    if (response.status === 200) {
+      if (isLogin) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        console.log("Login success, redirecting...");
+        setIsAuth(true);
+        navigate("/home");
+
+        // 🔥 yahi main line hai
+        navigate("/home");
       }
 
-      setFormData({
-        name: "",
-        email: "",
-        password: ""
-      });
-
-    } catch (error) {
-      console.error("Auth error:", error);
-
-      const msg =
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        "Something went wrong";
-
-      alert(msg);
+      alert(response.data.message || "Success");
     }
-  };
+
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+    });
+  } catch (error) {
+    console.error("Auth error:", error);
+
+    const msg =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      "Something went wrong";
+
+    alert(msg);
+  }
+};
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">

@@ -5,6 +5,7 @@ import AppRoutes from "./AppRoutes";
 
 const App = () => {
   const [cart, setCart] = useState([]);
+  const [isAuth, setIsAuth] = useState(false); 
 
   const addToCart = (item) => {
     const exist = cart.find(i => i.id === item.id);
@@ -22,7 +23,7 @@ const App = () => {
 
   return (
     <Router>
-      <Navbar cartCount={cart.length} />
+      {isAuth && <Navbar cartCount={cart.length} />}
 
       <AppRoutes
         cartProps={{
@@ -30,6 +31,8 @@ const App = () => {
           addToCart,
           setCart
         }}
+        isAuth={isAuth}
+        setIsAuth={setIsAuth}
       />
     </Router>
   );
