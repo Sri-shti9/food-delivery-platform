@@ -2,7 +2,6 @@ import { useState } from "react";
 import api from "../axiosSetup/axios";
 import { useNavigate } from "react-router-dom";
 
-
 const Auth = ({ setIsAuth }) => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
@@ -15,7 +14,6 @@ const Auth = ({ setIsAuth }) => {
 
   const [errors, setErrors] = useState({});
 
-  // handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,7 +21,6 @@ const Auth = ({ setIsAuth }) => {
     });
   };
 
-  // validation
   const handleValidation = () => {
     let tempErrors = {};
     let isValid = true;
@@ -53,150 +50,180 @@ const Auth = ({ setIsAuth }) => {
     return isValid;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!handleValidation()) return;
+    if (!handleValidation()) return;
 
-  try {
-    const endpoint = isLogin ? "/auth/login" : "/auth/signup";
+    try {
+      const endpoint = isLogin ? "/auth/login" : "/auth/signup";
 
-    const payload = isLogin
-      ? {
-          email: formData.email,
-          password: formData.password,
+      const payload = isLogin
+        ? { email: formData.email, password: formData.password }
+        : { name: formData.name, email: formData.email, password: formData.password };
+
+      const response = await api.post(endpoint, payload);
+
+      if (response.status === 200) {
+        if (isLogin) {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+
+          setIsAuth(true);
+          navigate("/home");
         }
-      : {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        };
 
-    const response = await api.post(endpoint, payload);
-    console.log(response);
-
-    if (response.status === 200) {
-      if (isLogin) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        console.log("Login success, redirecting...");
-        setIsAuth(true);
-        navigate("/home");
-
-        // 🔥 yahi main line hai
-        navigate("/home");
+        alert(response.data.message || "Success");
       }
 
-      alert(response.data.message || "Success");
+      setFormData({ name: "", email: "", password: "" });
+
+    } catch (error) {
+      const msg =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        "Something went wrong";
+
+      alert(msg);
     }
-
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-    });
-  } catch (error) {
-    console.error("Auth error:", error);
-
-    const msg =
-      error.response?.data?.message ||
-      error.response?.data?.error ||
-      "Something went wrong";
-
-    alert(msg);
-  }
-};
+  };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow" style={{ width: "400px" }}>
-        <h3 className="text-center mb-4">
-          {isLogin ? "Login" : "Signup"} - Food Website
+    <div className="auth-container d-flex justify-content-center align-items-center">
+
+      <div className="auth-card">
+
+        <h3 className="text-center mb-4 text-white">
+          {isLogin ? "Welcome Back 👋" : "Create Account 🚀"}
         </h3>
 
         <form onSubmit={handleSubmit}>
-          {/* Name Field (Signup only) */}
+
           {!isLogin && (
             <div className="mb-3">
-              <label>Name</label>
               <input
                 type="text"
                 name="name"
-                className="form-control"
-                placeholder="Enter name"
+                className="form-control custom-input"
+                placeholder="Full Name"
                 value={formData.name}
                 onChange={handleChange}
               />
-              {errors.name && (
-                <small className="text-danger">{errors.name}</small>
-              )}
+              {errors.name && <small className="text-danger">{errors.name}</small>}
             </div>
           )}
 
-          {/* Email */}
           <div className="mb-3">
-            <label>Email</label>
             <input
               type="text"
               name="email"
-              className="form-control"
-              placeholder="Enter email"
+              className="form-control custom-input"
+              placeholder="Email Address"
               value={formData.email}
               onChange={handleChange}
             />
-            {errors.email && (
-              <small className="text-danger">{errors.email}</small>
-            )}
+            {errors.email && <small className="text-danger">{errors.email}</small>}
           </div>
 
-          {/* Password */}
           <div className="mb-3">
-            <label>Password</label>
             <input
               type="password"
               name="password"
-              className="form-control"
-              placeholder="Enter password"
+              className="form-control custom-input"
+              placeholder="Password"
               value={formData.password}
               onChange={handleChange}
             />
-            {errors.password && (
-              <small className="text-danger">{errors.password}</small>
-            )}
+            {errors.password && <small className="text-danger">{errors.password}</small>}
           </div>
 
           <div className="d-grid">
-            <button className="btn btn-primary">
+            <button className="btn auth-btn">
               {isLogin ? "Login" : "Signup"}
             </button>
           </div>
+
         </form>
 
         {/* Toggle */}
         <div className="text-center mt-3">
           {isLogin ? (
-            <p>
-              Don't have an account?{" "}
-              <span
-                style={{ cursor: "pointer", color: "blue" }}
-                onClick={() => setIsLogin(false)}
-              >
+            <p className="text-light">
+              Don’t have an account?{" "}
+              <span className="toggle" onClick={() => setIsLogin(false)}>
                 Signup
               </span>
             </p>
           ) : (
-            <p>
+            <p className="text-light">
               Already have an account?{" "}
-              <span
-                style={{ cursor: "pointer", color: "blue" }}
-                onClick={() => setIsLogin(true)}
-              >
+              <span className="toggle" onClick={() => setIsLogin(true)}>
                 Login
               </span>
             </p>
           )}
         </div>
+
       </div>
+
+      {/* CSS */}
+      <style>{`
+        .auth-container {
+          height: 100vh;
+          background: linear-gradient(135deg, #1f2937, #111827);
+        }
+
+        .auth-card {
+          width: 380px;
+          padding: 30px;
+          border-radius: 20px;
+          background: rgba(255,255,255,0.08);
+          backdrop-filter: blur(12px);
+          box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .custom-input {
+          background: rgba(255,255,255,0.1);
+          border: none;
+          color: white;
+          padding: 10px;
+        }
+
+        .custom-input::placeholder {
+          color: #d1d5db;
+        }
+
+        .custom-input:focus {
+          background: rgba(255,255,255,0.15);
+          color: white;
+          box-shadow: 0 0 0 2px #ff6b6b;
+        }
+
+        .auth-btn {
+          background: linear-gradient(135deg, #ff6b6b, #ff3b3b);
+          color: white;
+          border: none;
+          padding: 10px;
+          border-radius: 10px;
+          transition: 0.3s;
+        }
+
+        .auth-btn:hover {
+          transform: scale(1.05);
+          box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+
+        .toggle {
+          color: #ff6b6b;
+          cursor: pointer;
+          font-weight: 600;
+        }
+
+        .toggle:hover {
+          text-decoration: underline;
+        }
+      `}</style>
+
     </div>
   );
 };
