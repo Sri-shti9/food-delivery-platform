@@ -4,226 +4,283 @@ import { useNavigate } from "react-router-dom";
 
 const Auth = ({ setIsAuth }) => {
   const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(true);
+  const [role, setRole] = useState("user");
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
   });
-
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-  };
-
-  const handleValidation = () => {
-    let tempErrors = {};
-    let isValid = true;
-
-    if (!isLogin && !formData.name) {
-      tempErrors.name = "Name is required";
-      isValid = false;
-    }
-
-    if (!formData.email) {
-      tempErrors.email = "Email is required";
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      tempErrors.email = "Invalid email format";
-      isValid = false;
-    }
-
-    if (!formData.password) {
-      tempErrors.password = "Password is required";
-      isValid = false;
-    } else if (formData.password.length < 6) {
-      tempErrors.password = "Password must be at least 6 characters";
-      isValid = false;
-    }
-
-    setErrors(tempErrors);
-    return isValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!handleValidation()) return;
-
     try {
       const endpoint = isLogin ? "/auth/login" : "/auth/signup";
 
       const payload = isLogin
-        ? { email: formData.email, password: formData.password }
-        : { name: formData.name, email: formData.email, password: formData.password };
+        ? {
+            email: formData.email,
+            password: formData.password,
+            role, // ✅ only login
+          }
+        : {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          };
 
       const response = await api.post(endpoint, payload);
 
-      if (response.status === 200) {
-        if (isLogin) {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
+      if (isLogin) {
+        // ✅ Save token + user
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
-          setIsAuth(true);
+        setIsAuth(true);
+
+        // ✅ Role-based redirect
+        const userRole = response.data.user.role;
+
+        if (userRole === "admin") {
+          navigate("/admin");
+        } else if (userRole === "supplier") {
+          navigate("/supplier");
+        } else {
           navigate("/home");
         }
-
-        alert(response.data.message || "Success");
+      } else {
+        alert("Signup successful! Please login.");
+        setIsLogin(true);
       }
-
-      setFormData({ name: "", email: "", password: "" });
-
-    } catch (error) {
-      const msg =
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        "Something went wrong";
-
-      alert(msg);
+    } catch (err) {
+      alert(err.response?.data?.message || "Something went wrong ❌");
     }
   };
 
   return (
-    <div className="auth-container d-flex justify-content-center align-items-center">
-
+    <div className="auth-wrapper">
       <div className="auth-card">
 
-        <h3 className="text-center mb-4 text-white">
-          {isLogin ? "Welcome Back 👋" : "Create Account 🚀"}
-        </h3>
+        {/* LEFT */}
+        <div className="auth-left">
 
-        <form onSubmit={handleSubmit}>
+          <h2>{isLogin ? "Welcome Back 👋" : "Create Account 🚀"}</h2>
+          <p>
+            {isLogin
+              ? "Login to continue"
+              : "Signup as a normal user"}
+          </p>
 
-          {!isLogin && (
-            <div className="mb-3">
-              <input
-                type="text"
-                name="name"
-                className="form-control custom-input"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-              {errors.name && <small className="text-danger">{errors.name}</small>}
+          {/* ROLE SELECT (only for login) */}
+          {isLogin && (
+            <div className="role-tabs">
+              {["user", "admin", "supplier"].map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  className={role === r ? "active" : ""}
+                  onClick={() => setRole(r)}
+                >
+                  {r}
+                </button>
+              ))}
             </div>
           )}
 
-          <div className="mb-3">
-            <input
-              type="text"
-              name="email"
-              className="form-control custom-input"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            {errors.email && <small className="text-danger">{errors.email}</small>}
-          </div>
+          <form onSubmit={handleSubmit}>
 
-          <div className="mb-3">
+            {!isLogin && (
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                onChange={handleChange}
+                required
+              />
+            )}
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+              required
+            />
+
             <input
               type="password"
               name="password"
-              className="form-control custom-input"
               placeholder="Password"
-              value={formData.password}
               onChange={handleChange}
+              required
             />
-            {errors.password && <small className="text-danger">{errors.password}</small>}
-          </div>
 
-          <div className="d-grid">
-            <button className="btn auth-btn">
+            <button className="auth-btn">
               {isLogin ? "Login" : "Signup"}
             </button>
+
+          </form>
+
+          {/* TOGGLE */}
+          <div className="toggle">
+            {isLogin ? (
+              <p>
+                Don't have an account?{" "}
+                <span onClick={() => setIsLogin(false)}>Signup</span>
+              </p>
+            ) : (
+              <p>
+                Already have an account?{" "}
+                <span onClick={() => setIsLogin(true)}>Login</span>
+              </p>
+            )}
           </div>
 
-        </form>
+        </div>
 
-        {/* Toggle */}
-        <div className="text-center mt-3">
-          {isLogin ? (
-            <p className="text-light">
-              Don’t have an account?{" "}
-              <span className="toggle" onClick={() => setIsLogin(false)}>
-                Signup
-              </span>
-            </p>
-          ) : (
-            <p className="text-light">
-              Already have an account?{" "}
-              <span className="toggle" onClick={() => setIsLogin(true)}>
-                Login
-              </span>
-            </p>
-          )}
+        {/* RIGHT */}
+        <div className="auth-right">
+          <div className="overlay">
+            <h1>Food App 🍔</h1>
+            <p>Order fast. Eat fresh.</p>
+          </div>
         </div>
 
       </div>
 
       {/* CSS */}
       <style>{`
-        .auth-container {
+        .auth-wrapper {
           height: 100vh;
-          background: linear-gradient(135deg, #1f2937, #111827);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
         .auth-card {
-          width: 380px;
-          padding: 30px;
-          border-radius: 20px;
-          background: rgba(255,255,255,0.08);
-          backdrop-filter: blur(12px);
-          box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        .custom-input {
+          display: flex;
+          width: 900px;
           background: rgba(255,255,255,0.1);
-          border: none;
-          color: white;
+          backdrop-filter: blur(15px);
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .auth-left {
+          flex: 1;
+          padding: 40px;
+          background: white;
+        }
+
+        h2 {
+          margin-bottom: 10px;
+        }
+
+        p {
+          color: gray;
+          margin-bottom: 20px;
+        }
+
+        .role-tabs {
+          display: flex;
+          background: #f1f1f1;
+          border-radius: 10px;
+          margin-bottom: 20px;
+        }
+
+        .role-tabs button {
+          flex: 1;
           padding: 10px;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          border-radius: 10px;
         }
 
-        .custom-input::placeholder {
-          color: #d1d5db;
-        }
-
-        .custom-input:focus {
-          background: rgba(255,255,255,0.15);
+        .role-tabs .active {
+          background: #667eea;
           color: white;
-          box-shadow: 0 0 0 2px #ff6b6b;
+          font-weight: bold;
+        }
+
+        input {
+          width: 100%;
+          padding: 12px;
+          margin-bottom: 15px;
+          border-radius: 10px;
+          border: 1px solid #ddd;
+          outline: none;
+        }
+
+        input:focus {
+          border-color: #667eea;
         }
 
         .auth-btn {
-          background: linear-gradient(135deg, #ff6b6b, #ff3b3b);
+          width: 100%;
+          padding: 12px;
+          border-radius: 10px;
+          background: #667eea;
           color: white;
           border: none;
-          padding: 10px;
-          border-radius: 10px;
+          font-weight: bold;
+          cursor: pointer;
           transition: 0.3s;
         }
 
         .auth-btn:hover {
-          transform: scale(1.05);
-          box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+          background: #5a67d8;
         }
 
-        .toggle {
-          color: #ff6b6b;
+        .toggle span {
+          color: #667eea;
           cursor: pointer;
-          font-weight: 600;
+          font-weight: bold;
         }
 
-        .toggle:hover {
-          text-decoration: underline;
+        .auth-right {
+          flex: 1;
+          background: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836") center/cover;
+          position: relative;
+        }
+
+        .overlay {
+          height: 100%;
+          width: 100%;
+          background: rgba(0,0,0,0.5);
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .overlay h1 {
+          font-size: 40px;
+        }
+
+        @media(max-width:768px){
+          .auth-card{
+            flex-direction: column;
+            width: 90%;
+          }
+          .auth-right{
+            height: 200px;
+          }
         }
       `}</style>
-
     </div>
   );
 };
