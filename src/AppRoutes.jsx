@@ -3,6 +3,8 @@ import Auth from "./Pages/Auth";
 import Home from "./Pages/Home";
 import CartPage from "./components/CartPage";
 import Payment from "./Pages/Payment";
+import Menu from "./components/Menu";
+import AddFood from "./Admin/AddFood";
 
 const PrivateRoute = ({ children, isAuth }) => {
   return isAuth ? children : <Navigate to="/login" />;
@@ -34,6 +36,22 @@ const AppRoutes = ({ cartProps, isAuth, setIsAuth }) => {
         element={
           <PrivateRoute isAuth={isAuth}>
             <Payment />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/menus"
+        element={
+          <PrivateRoute isAuth={isAuth}>
+            <Menu />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/add-food"
+        element={
+          <PrivateRoute isAuth={isAuth}>
+            <AddFood/>
           </PrivateRoute>
         }
       />
