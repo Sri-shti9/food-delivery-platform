@@ -42,7 +42,7 @@ const getFoods = (req, res) => {
   db.query(query, (err, result) => {
     if (err) {
       return res.status(500).json({
-        success: false,
+        success: false, 
         message: "Error fetching foods",
       });
     }

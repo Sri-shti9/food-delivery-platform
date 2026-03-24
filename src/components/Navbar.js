@@ -44,7 +44,7 @@ function Navbar({ cartCount }) {
               { path: "/menus", name: "Menu", icon: "fa-utensils" },
               { path: "/about", name: "About", icon: "fa-info-circle" },
               { path: "/delivery", name: "Delivery", icon: "fa-truck" },
-              { path: "/contacts", name: "Contacts", icon: "fa-phone" },
+              { path: "/foodlist", name: "food list", icon: "fa-phone" },
               { path: "/add-food", name: "ADD ITEM", icon: "fa-phone" },
             ].map((item, i) => (
               <li key={i} className="nav-item">

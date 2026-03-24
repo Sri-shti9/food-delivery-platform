@@ -5,6 +5,7 @@ import CartPage from "./components/CartPage";
 import Payment from "./Pages/Payment";
 import Menu from "./components/Menu";
 import AddFood from "./Admin/AddFood";
+import FoodList from "./components/FoodList";
 
 const PrivateRoute = ({ children, isAuth }) => {
   return isAuth ? children : <Navigate to="/login" />;
@@ -55,6 +56,15 @@ const AppRoutes = ({ cartProps, isAuth, setIsAuth }) => {
           </PrivateRoute>
         }
       />
+      <Route
+        path="/foodlist"
+        element={
+          <PrivateRoute isAuth={isAuth}>
+            <FoodList/>
+          </PrivateRoute>
+        }
+      />
+
     </Routes>
   );
 };
